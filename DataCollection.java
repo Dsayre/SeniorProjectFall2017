@@ -45,38 +45,48 @@ public class DataCollection {
 TwitterFactory tf = new TwitterFactory(cb.build());
 Twitter mytwitter = tf.getInstance();
         
-    // Stores count of all words from a query
-    Map<String, Integer> words = new HashMap<String, Integer>(); 
-    String buffer = ""; 
-    String[] tw; 
+// Stores count of all words from a query
+        Map<String, Integer> words = new HashMap<String, Integer>();
+        String buffer = "";
+        String[] tw;
+        int iterations = 10;
+        int batchsize = 100;
+        long lastId = Long.MAX_VALUE;
 
-    Query query = new Query("#taketheknee");
-    query.setCount(100);
-    QueryResult result = mytwitter.search(query);
-    System.out.println("Results: " + result.getCount() + "\n"); 
-    for (Status status : result.getTweets()) {
-       // buffer = status.getText().replaceAll("\\p{Punct}|\\d", "").toLowerCase(); 
-       // tw = buffer.split(" "); 
-       // tw = status.getText().toLowerCase().split(" "); 
-       tw = status.getText().replaceAll("[^a-zA-Z0-9\\s]", "").toLowerCase().split("\\s+"); 
-        for(int i = 0; i < tw.length; i++) {
-            if(words.containsKey(tw[i])) {
-                words.put(tw[i], words.get(tw[i])+1); // Increment on hit
-            } else {
-                words.put(tw[i], 1); // Add new entry on miss 
+        Query query = new Query("#taketheknee");
+        query.setCount(batchsize);
+        QueryResult result;
+
+        for (int j = 0; j < iterations; j++) {
+            result = mytwitter.search(query);
+            System.out.println("Progress: " + j * batchsize + "/" + iterations * batchsize);
+
+            for (Status status : result.getTweets()) {
+                // buffer = status.getText().replaceAll("\\p{Punct}|\\d", "").toLowerCase(); 
+                // tw = buffer.split(" "); 
+                // tw = status.getText().toLowerCase().split(" "); 
+                if (status.getId() < lastId) {
+                    lastId = status.getId();
+                }
+                tw = status.getText().replaceAll("[^a-zA-Z0-9\\s]", "").toLowerCase().split("\\s+");
+                for (int i = 0; i < tw.length; i++) {
+                    if (words.containsKey(tw[i])) {
+                        words.put(tw[i], words.get(tw[i]) + 1); // Increment on hit
+                    } else {
+                        words.put(tw[i], 1); // Add new entry on miss 
+                    }
+                }
             }
+            query.setMaxId(lastId - 1);
+            //System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
         }
-        
-        
-        //System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-    }
-    
-    words = sortDescending(words); 
-    
-    for(Entry i : words.entrySet()) {
-        System.out.println(i.getKey() + " : " + i.getValue()); 
-    }
+
+        words = sortDescending(words);
+
+        for (Entry i : words.entrySet()) {
+            System.out.println(i.getKey() + " : " + i.getValue());
+        }
 //    System.out.println(words); 
-        
-}
+
+    }
 }
