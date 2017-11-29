@@ -54,7 +54,12 @@ Twitter mytwitter = tf.getInstance();
         long lastId = Long.MAX_VALUE;
 
         Query query = new Query("#taketheknee");
-        query.setCount(batchsize);
+        /*response.setContentType("text/html"); //sets query equal to input
+        PrintWriter out = response.getWriter();
+        String input = request.getParameter("keywordTextbox");
+        Query query = new Query(input);
+        */
+        query.setCount(batchsize);      
         QueryResult result;
 
         for (int j = 0; j < iterations; j++) {
