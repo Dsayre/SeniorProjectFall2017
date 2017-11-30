@@ -48,8 +48,6 @@ public class Interface extends JFrame {
         word3.setPreferredSize(new Dimension(300, 50));
         word3.setFont(new Font(nps.getFont().getFontName(), Font.PLAIN, 30));
 
-        
-
         pane.add(text);
         pane.add(search);
         pane.add(nps);
@@ -57,42 +55,55 @@ public class Interface extends JFrame {
         pane.add(word2);
         pane.add(word3);
 
-        
         frame.setLayout(new GridBagLayout());
-        frame.add(pane); 
+        frame.add(pane);
         frame.setContentPane(pane);
-        
+
         frame.pack();
-        
-        
+
 //  frame.add(pane); 
-        
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                nps.setText("Loading");
+                nps.setText("loading");
                 word1.setText("");
                 word2.setText("");
                 word3.setText("");
-                query = text.getText();
-                try {
-                    results = DataCollection.collectData(query);
+                Runnable r = new Runnable() {
+                    @Override
+                    public void run() {
+                        query = text.getText();
+                        try {
+                            results = DataCollection.collectData(query);
 //        System.out.println(results[1]); 
-                    nps.setText(results[0]);
-                    word1.setText(results[1]);
-                    word2.setText(results[2]);
-                    word3.setText(results[3]);
-                } catch (Exception ex) {
-                    System.out.println(ex.toString());
-                }
+                            nps.setText(results[0]);
+                            int value = Integer.parseInt(results[0]);
+                            if (value > 600) {
+                                nps.setForeground(Color.green);
+                            } else if (value > 300) {
+                                nps.setForeground(Color.yellow);
+                            } else {
+                                nps.setForeground(Color.red);
+                            }
+                            word1.setText(results[1]);
+                            word2.setText(results[2]);
+                            word3.setText(results[3]);
+                        } catch (Exception ex) {
+                            System.out.println(ex.toString());
+                        }
+                    }
 
+                };
+                Thread t = new Thread(r);
+                t.start(); 
             }
-        });
 
+        }
+        );
     }
 }
 
-/*
+    /*
 /* FrameDemo.java requires no other files. 
 public class Interface {
     private static JTextField pollText;
@@ -160,4 +171,4 @@ public class Interface {
 		panel.add(netPositivityScore);		
 	}
 }
-*/
+     */
