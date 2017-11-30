@@ -32,7 +32,7 @@ public class DataCollection {
 
     public static String[] collectData(String input) throws TwitterException, IOException {
     	//JOptionPane.showMessageDialog(null, input);
-        Dictionary dic = new Dictionary();
+        // Dictionary dic = new Dictionary();
 
 
         ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -52,10 +52,10 @@ public class DataCollection {
         int batchsize = 100;
         long lastId = Long.MAX_VALUE;
 
-        Query query = new Query("#northkorea");
+        Query query = new Query(input);
         query.setCount(batchsize);
         QueryResult result;
-        Dictionary dic = new Dictionary(query.getQuery().substring(1)); //bans query term
+        Dictionary dic = new Dictionary(input); //bans query term
 
         for (int j = 0; j < iterations; j++) {
             result = mytwitter.search(query);
@@ -85,16 +85,19 @@ public class DataCollection {
 
         words = sortDescending(words);
 
+        String[] h = new String[3]; 
         for (Entry i : words.entrySet()) {
             dic.feedInTweets(i.getKey().toString(), (int)i.getValue());
-            dic.findTopThreeSentiments(i.getKey().toString());
+            h = dic.findTopThreeSentiments(i.getKey().toString());
             //    System.out.println(i.getKey() + " : " + i.getValue());
         }
         int netPositivityScore = dic.calculateSentiment();
 //    System.out.println(words);
         String[] output = new String[4];
         output[0] = Integer.toString(netPositivityScore);
+        output[1] = h[0]; 
+        output[2] = h[1];
+        output[3] = h[2]; 
         return output;
     }
 }
-
