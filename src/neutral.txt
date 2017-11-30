@@ -110,3 +110,5 @@ stream
 la
 got
 are
+http
+https
