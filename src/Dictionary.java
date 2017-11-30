@@ -30,9 +30,11 @@ public class Dictionary {
 
 
         try {
+
             inPosStream = new FileInputStream("src/positive.txt");
             inNegStream = new FileInputStream("src/negative.txt");
             inNeutralStream = new FileInputStream("src/neutral.txt");
+
             Scanner posScanner = new Scanner(inPosStream);
             Scanner negScanner = new Scanner(inNegStream);
             Scanner neutralScanner = new Scanner(inNeutralStream);
@@ -93,11 +95,15 @@ public class Dictionary {
         }
     }
 
-    public void calculateSentiment() {
+
+    public int calculateSentiment() {
+
         for(int j = 1; j < topThree.length + 1; j++) {
             System.out.println("Number " + j + " word: " + topThree[j-1]);
         }
+
         System.out.println("Net positivity score is: " + (posCount-negCount));
+        return posCount-negCount;
     }
 
     /*
