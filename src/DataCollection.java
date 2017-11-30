@@ -30,7 +30,7 @@ public class DataCollection {
 
 
     public static String[] collectData(String input) throws TwitterException, IOException {
-    	JOptionPane.showMessageDialog(null, input);
+    	//JOptionPane.showMessageDialog(null, input);
         Dictionary dic = new Dictionary();
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
@@ -93,3 +93,4 @@ public class DataCollection {
         return output;
     }
 }
+
