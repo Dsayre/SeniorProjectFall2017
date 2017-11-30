@@ -47,7 +47,7 @@ public class DataCollection {
         int batchsize = 100;
         long lastId = Long.MAX_VALUE;
 
-        Query query = new Query("#christmas");
+        Query query = new Query("");
         query.setCount(batchsize);
         QueryResult result;
 
@@ -70,9 +70,12 @@ public class DataCollection {
                         words.put(tw[i], 1); // Add new entry on miss
                     }
                 }
+                dic.feedInTweets(status.getText()); 
+           // System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
+       
             }
             query.setMaxId(lastId - 1);
-            //System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
+          //  System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
         }
 
         words = sortDescending(words);
