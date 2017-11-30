@@ -24,8 +24,8 @@ public class Dictionary {
 
 
         try {
-            inPosStream = new FileInputStream("src/positive.txt");
-            inNegStream = new FileInputStream("src/negative.txt");
+            inPosStream = new FileInputStream("\src\positive.txt");
+            inNegStream = new FileInputStream("\src\negative.txt");
             Scanner posScanner = new Scanner(inPosStream);
             Scanner negScanner = new Scanner(inNegStream);
 
@@ -53,14 +53,19 @@ public class Dictionary {
     }
 
     public void feedInTweets(String word) {
+        int score = 0; 
         for (int i = 0; i < positiveList.size(); i++) {
             if(word.equals(positiveList.get(i))) {
-                posCount++;
+                score++;
             }
             else if(word.equals(negativeList.get(i))) {
-                negCount++;
+                score--;
             }
         }
+        if (score > 0)
+            posCount++;
+        else if (score < 0)
+            negCount++; 
     }
 
     public void calculateSentiment() {
