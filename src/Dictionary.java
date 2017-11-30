@@ -22,6 +22,8 @@ public class Dictionary {
         this.negativeList = negList;
         this.neutralList = neutralList;
     }
+    
+    public Dictionary() {} 
 
     private void populateLists() throws IOException {
         FileInputStream inPosStream = null;
@@ -80,7 +82,7 @@ public class Dictionary {
         }
     }
 
-    public void findTopThreeSentiments(String word) {
+    public String[] findTopThreeSentiments(String word) {
         if(topThreeIndex < topThree.length) {
             boolean isNeutral = false;
             for(int i = 0; i < neutralList.size(); i++) {
@@ -93,6 +95,7 @@ public class Dictionary {
                 topThreeIndex++;
             }
         }
+        return topThree; 
     }
 
 
