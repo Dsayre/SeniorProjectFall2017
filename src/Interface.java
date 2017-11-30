@@ -9,18 +9,20 @@ import twitter4j.TwitterException;
 /* FrameDemo.java requires no other files. */
 public class Interface {
     private static JTextField pollText;
+    private static JPanel panel;
     private static void createAndShowGUI() {
         //Create and set up the window.
     	JFrame.setDefaultLookAndFeelDecorated(false);
         JFrame frame = new JFrame("TwitterPoll");
+        frame.setSize(500, 400);
         frame.setState(Frame.MAXIMIZED_BOTH);
         frame.setIconImage(new ImageIcon("http://icons.iconarchive.com/icons/uiconstock/socialmedia/512/Twitter-icon.png").getImage());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
-        JLabel emptyLabel = new JLabel("");
+        JLabel emptyLabel = new JLabel("TwitterPoll");
         emptyLabel.setPreferredSize(new Dimension(175, 100));
         frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         frame.add(panel);
 		placeComponents(panel);
  
@@ -34,6 +36,7 @@ public class Interface {
 
 		JLabel pollLabel = new JLabel("Poll");
 		pollLabel.setBounds(10, 10, 80, 25);
+		pollLabel.setPreferredSize(new Dimension(50, 75));
 		panel.add(pollLabel);
 
 		pollText = new JTextField(100);
@@ -48,13 +51,8 @@ public class Interface {
 		searchButton.addActionListener(searchButtonListener);
 	}
 
-    	public void actionPerformed(ActionEvent e) throws TwitterException, IOException {
-    		JOptionPane.showMessageDialog(null, "Polling");
-    		//send getPoll to DataCollection
-    		DataCollection.collectData(getPoll());
-    	}
-
-    public String getPoll() {
+    public static String getPoll() {
+    	System.out.println(pollText.getText());
            return pollText.getText().trim();
     }
 	public static void main(String[] args) {
@@ -66,4 +64,12 @@ public class Interface {
             }
         });
     }
+
+	public static void output() throws TwitterException, IOException {
+		String[] output = DataCollection.collectData(getPoll());
+		JLabel netPositivityScore = new JLabel("Net Positivity Score: ");
+		netPositivityScore.setBounds(10, 80, 80, 25);
+		netPositivityScore.setFont(new Font(netPositivityScore.getFont().getName(), netPositivityScore.getFont().getStyle(), 20));
+		panel.add(netPositivityScore);		
+	}
 }
