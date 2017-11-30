@@ -51,7 +51,7 @@ public class Interface {
     	public void actionPerformed(ActionEvent e) throws TwitterException, IOException {
     		JOptionPane.showMessageDialog(null, "Polling");
     		//send getPoll to DataCollection
-    		DataCollection.main(getPoll());
+    		DataCollection.collectData(getPoll());
     	}
 
     public String getPoll() {
