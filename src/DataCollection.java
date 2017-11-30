@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
 
+import javax.swing.JOptionPane;
+
 public class DataCollection {
 
     public static Map<String, Integer> sortDescending(Map<String, Integer> unsorted)
@@ -27,8 +29,8 @@ public class DataCollection {
 
 
 
-    public static void main(String[] args) throws TwitterException, IOException {
-
+    public static String[] collectData(String input) throws TwitterException, IOException {
+    	JOptionPane.showMessageDialog(null, input);
         Dictionary dic = new Dictionary();
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
@@ -84,8 +86,10 @@ public class DataCollection {
             dic.feedInTweets(i.getKey().toString());
             //System.out.println(i.getKey() + " : " + i.getValue());
         }
-        dic.calculateSentiment();
+        int netPositivityScore = dic.calculateSentiment();
 //    System.out.println(words);
-
+        String[] output = new String[4];
+        output[0] = Integer.toString(netPositivityScore);
+        return output;
     }
 }
