@@ -106,7 +106,8 @@ public class Dictionary {
         }
 
         System.out.println("Net positivity score is: " + (posCount-negCount));
-        return posCount-negCount;
+        return posCount - negCount; 
+//     return (int)(100*(double)posCount/((double)posCount+(double)negCount));
     }
 
     /*
