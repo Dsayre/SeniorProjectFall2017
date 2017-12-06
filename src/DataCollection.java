@@ -37,10 +37,10 @@ public class DataCollection {
 
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true)
-                .setOAuthConsumerKey("CCV16sY8MoDnmGC8DhJZBPUxW")
-                .setOAuthConsumerSecret("RQkMiEymiKYr41k4xGaLSmJJV2i5Z6dKPLk8YefEYLJLDdkFhO")
-                .setOAuthAccessToken("909502828112052224-yuxb4ao39g3FSuuomcMw1TgJOPvN6Se")
-                .setOAuthAccessTokenSecret("Pg7lFqPk7lfzRqHf7qJMhoi6j0qjesSEErpN4Z1MCeC2Q");
+                .setOAuthConsumerKey("")
+                .setOAuthConsumerSecret("")
+                .setOAuthAccessToken("")
+                .setOAuthAccessTokenSecret("");
         TwitterFactory tf = new TwitterFactory(cb.build());
         Twitter mytwitter = tf.getInstance();
 
